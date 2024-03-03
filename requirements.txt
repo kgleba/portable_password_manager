@@ -1,0 +1,4 @@
+validators~=0.22.0
+pycryptodome~=3.20.0
+pyasn1~=0.5.1
+PyInquirer @ git+https://github.com/CITGuru/PyInquirer
