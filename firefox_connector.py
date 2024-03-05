@@ -90,6 +90,9 @@ def get_key(master_password: str = ''):
             encryption_method = 'AES'
             decoded_data = der_decode(data)
             plaintext = decrypt_AES(decoded_data, master_password, global_salt)
+        except StopIteration:
+            print('Firefox key not found. Please add entry to your browser manually. Exiting...')
+            sys.exit()
 
         assert plaintext == pad(b'password-check', 16)
 

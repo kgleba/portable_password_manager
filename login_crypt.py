@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from base64 import b64decode, b64encode
 
 from Crypto.Cipher import AES
@@ -11,16 +12,14 @@ MASTER_PASSWORD = ''
 KEY = b''
 
 
-def init_crypto(master_password: str) -> bool:
+def init_crypto(master_password: str):
     global MASTER_PASSWORD, KEY
 
     MASTER_PASSWORD = master_password
     KEY = PBKDF2(MASTER_PASSWORD, SALT, 32, count=1_000_000, hmac_hash_module=SHA512)
 
     if decrypt_logins() is None:
-        return False
-
-    return True
+        sys.exit()
 
 
 def load_logins() -> dict:

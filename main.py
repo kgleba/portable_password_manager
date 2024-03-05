@@ -1,6 +1,6 @@
 from __future__ import print_function, unicode_literals
 
-import sys
+import os
 from pathlib import Path
 
 import validators
@@ -10,9 +10,9 @@ from prompt_toolkit.validation import ValidationError, Validator
 import utils
 from login_crypt import decrypt_logins, dump_logins, encrypt_logins, init_crypto
 
-INITIALIZED_LOCAL = False
-
 DB_PATH = Path('logins.json')
+
+os.system('color')
 
 
 class URLValidator(Validator):
@@ -110,10 +110,11 @@ insert_parameter_selectors = [
     }
 ]
 
+utils.init_local()
+
 if DB_PATH.is_file():
     master_password = prompt.prompt(auth_selector)['master_password']
-    if not init_crypto(master_password):
-        sys.exit()
+    init_crypto(master_password)
 else:
     print('Master Password for the DB is not set (proceed only in safe environment!)')
     initial_password = prompt.prompt(auth_selector)['master_password']
@@ -131,11 +132,6 @@ while True:
             break
         case 'Insert entry to browser':
             parameters = prompt.prompt(insert_parameter_selectors)
-
-            if not INITIALIZED_LOCAL:
-                if not utils.init_local():
-                    sys.exit()
-                INITIALIZED_LOCAL = True
 
             if parameters.get('insert_all'):
                 utils.insert_all_logins(current_logins)
@@ -183,8 +179,7 @@ while True:
                 print_json(login)
         case 'Show full DB entries (requires authorization)':
             master_password = prompt.prompt(auth_selector)['master_password']
-            if not init_crypto(master_password):
-                sys.exit()
+            init_crypto(master_password)
 
             for login in current_logins:
                 print_json(login)
