@@ -51,5 +51,7 @@ python main.py
 
 * Create and test release with a packaged Python environment
 * Include a function that updates Firefox password storage in the runtime
+* Add flash drive specification for the USB ejection task 
+* Check `installs.ini` and `profiles.ini` in Mozilla folder
 * Implement Google Chrome support
 * Implement Linux support

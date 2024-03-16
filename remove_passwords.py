@@ -14,7 +14,7 @@ try:
 except (json.decoder.JSONDecodeError, FileNotFoundError):
     added_logins = []
 
-firefox_connector.remove_logins_by_domain(added_logins)
+firefox_connector.remove_logins_by_id(added_logins)
 
 subprocess.Popen(['schtasks', '/delete', '/tn', 'PPM_USBEject', '/f'])
 

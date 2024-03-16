@@ -35,8 +35,12 @@ def init_local():
     subprocess.Popen(['schtasks', '/delete', '/tn', 'PPM_USBEject', '/f'],
                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    ctypes.windll.shell32.ShellExecuteW(None, 'runas', 'wevtutil',
-                                        'sl Microsoft-Windows-DriverFrameworks-UserMode/Operational /e:true', None, 0)
+    eventlog_check = subprocess.Popen(['wevtutil', 'gl', 'Microsoft-Windows-DriverFrameworks-UserMode/Operational'],
+                                      stdout=subprocess.PIPE)
+
+    if b'enabled: true' not in eventlog_check.stdout.read():
+        ctypes.windll.shell32.ShellExecuteW(None, 'runas', 'wevtutil',
+                                            'sl Microsoft-Windows-DriverFrameworks-UserMode/Operational /e:true', None, 0)
 
     tree = ET.parse('PPM_USBEject_Base.xml')
     ET.register_namespace('', 'http://schemas.microsoft.com/windows/2004/02/mit/task')
@@ -77,9 +81,8 @@ def insert_all_logins(current_logins: list[dict]):
 
     for login in current_logins:
         all_logins.append((login['url'], login['login'], login['password']))
-        added_logins.append(login['url'])
 
-    firefox_connector.add_logins(all_logins)
+    added_logins += firefox_connector.add_logins(all_logins)
 
     with open(TEMP_DIR / 'added_logins.json', 'w', encoding='utf-8') as logins_file:
         json.dump(added_logins, logins_file)
@@ -100,8 +103,7 @@ def insert_login(current_logins: list[dict], url: str):
 
     for login in current_logins:
         if check_url_match(login['url'], url):
-            firefox_connector.add_logins([(login['url'], login['login'], login['password'])])
-            added_logins.append(login['url'])
+            added_logins += firefox_connector.add_logins([(login['url'], login['login'], login['password'])])
 
     with open(TEMP_DIR / 'added_logins.json', 'w', encoding='utf-8') as logins_file:
         json.dump(added_logins, logins_file)

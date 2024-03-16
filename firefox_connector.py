@@ -15,8 +15,6 @@ from pyasn1.codec.der.decoder import Decoder, decode as der_decode
 from pyasn1.codec.der.encoder import encode as der_encode
 from pyasn1.type.univ import ObjectIdentifier, OctetString, Sequence
 
-import utils
-
 PROFILE_DIR = Path(os.getenv('APPDATA')) / 'Mozilla/Firefox/Profiles'
 WORKDIR = None
 
@@ -143,7 +141,7 @@ def dump_logins(data: dict):
         json.dump(data, logins_file, ensure_ascii=False, separators=(',', ':'))
 
 
-def add_logins(upd_logins: list[tuple]):
+def add_logins(upd_logins: list[tuple]) -> range:
     logins = load_logins()
 
     next_id = logins['nextId']
@@ -172,16 +170,18 @@ def add_logins(upd_logins: list[tuple]):
 
     dump_logins(logins)
 
+    return range(next_id, logins['nextId'])
 
-def remove_logins_by_domain(upd_logins: list[str]):
+
+def remove_logins_by_id(upd_logins: list[int]):
     logins = load_logins()
 
     cleaned_logins = []
     current_id = 1
 
     for login in logins['logins']:
-        for domain in upd_logins:
-            if utils.check_url_match(login['hostname'], domain):
+        for login_id in upd_logins:
+            if login_id == login['id']:
                 break
         else:
             login['id'] = current_id
