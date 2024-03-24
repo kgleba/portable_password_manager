@@ -1,6 +1,7 @@
 from __future__ import print_function, unicode_literals
 
 import os
+import sys
 from pathlib import Path
 
 import validators
@@ -12,7 +13,8 @@ from login_crypt import decrypt_logins, dump_logins, encrypt_logins, init_crypto
 
 DB_PATH = Path('logins.json')
 
-os.system('color')
+if sys.platform == 'win32':
+    os.system('color')
 
 
 class URLValidator(Validator):
@@ -35,7 +37,17 @@ auth_selector = [
     {
         'type': 'password',
         'name': 'master_password',
-        'message': 'Enter Master Password for the encrypted data:'
+        'message': 'Enter Master Password for the encrypted data:',
+        'validate': EmptinessValidator
+    }
+]
+
+reset_selector = [
+    {
+        'type': 'confirm',
+        'name': 'reset_password',
+        'message': 'Do you want to reset DB password?',
+        'default': False
     }
 ]
 
@@ -110,21 +122,39 @@ insert_parameter_selectors = [
     }
 ]
 
-utils.init_local()
+match sys.platform:
+    case 'win32':
+        utils.init_local_windows()
+    case 'linux':
+        utils.init_local_linux()
 
-if DB_PATH.is_file():
-    master_password = prompt.prompt(auth_selector)['master_password']
-    init_crypto(master_password)
-else:
+
+def set_password():
     print('Master Password for the DB is not set (proceed only in safe environment!)')
-    initial_password = prompt.prompt(auth_selector)['master_password']
+    initial_password = prompt.prompt(auth_selector).get('master_password')
     init_crypto(initial_password)
 
     dump_logins([])
     encrypt_logins()
 
+
+if DB_PATH.is_file():
+    for _ in range(3):
+        master_password = prompt.prompt(auth_selector).get('master_password')
+        if init_crypto(master_password):
+            break
+    else:
+        reset_password = prompt.prompt(reset_selector).get('reset_password')
+        if reset_password:
+            DB_PATH.unlink(missing_ok=True)
+            set_password()
+        else:
+            sys.exit()
+else:
+    set_password()
+
 while True:
-    action = prompt.prompt(action_selector)['action']
+    action = prompt.prompt(action_selector).get('action')
     current_logins = decrypt_logins()
 
     match action:
@@ -139,14 +169,20 @@ while True:
                 utils.insert_login(current_logins, parameters.get('url'))
         case 'Add entry to DB':
             parameters = prompt.prompt(add_parameter_selectors)
-            url, login, password = parameters.values()
+            try:
+                url, login, password = parameters.values()
+            except ValueError:
+                continue
 
             formed_login = {'url': url, 'login': login, 'password': password}
             current_logins.append(formed_login)
             encrypt_logins(current_logins)
         case 'Remove entry from DB':
             parameters = prompt.prompt(remove_parameter_selectors)
-            url, login, password = parameters.values()
+            try:
+                url, login, password = parameters.values()
+            except ValueError:
+                continue
 
             found_entries = 0
             found_entry = None
@@ -178,10 +214,11 @@ while True:
             for login in current_logins:
                 print_json(login)
         case 'Show full DB entries (requires authorization)':
-            master_password = prompt.prompt(auth_selector)['master_password']
-            init_crypto(master_password)
+            master_password = prompt.prompt(auth_selector).get('master_password')
+            if not init_crypto(master_password):
+                continue
 
-            for login in current_logins:
+            for login in decrypt_logins():
                 print_json(login)
 
     del current_logins

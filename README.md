@@ -2,30 +2,27 @@
 
 The project is in development right now :)
 
-## Installation (on Windows)
+## Installation
 
-Download the latest release, unzip it, and copy the files to your flash drive. Your password manager is ready to go!
+Download the latest release with the desired OS, unzip it, and copy the files to your flash drive. Your password manager is ready to go!
 
-Or, if you want to install everything manually (for example, for development):
+Or, if you want to create a development build:
 
-1) Install a specific version of Python on your host machine
-2) Download the "Windows Embeddable Package" of the same version of Python to the project folder
-   From the [release page](https://www.python.org/downloads/release/python-3114/)
-   or [official file cloud](https://www.python.org/ftp/python/3.11.4/):
-   ![Python Release Download Page](resources/python_release_download_page.png)
+1) Install Docker on your host machine
+2) Fork this repository and commit changes 
+3) Create folder `packages` and run the Docker container (note that you can adjust the `PYTHON_VERSION` and `PACKAGE_VERSION` variables):
+```shell
+mkdir packages
 
-3) Clone the repo with the source code:
-   ```shell
-   git clone https://github.com/kgleba/portable_password_manager
-   ```
-   
-4) Assuming the folder with an embedded edition of Python is named `python-embed`:
-   ```shell
-   cd python-embed
-   mkdir site-packages
-   pip install -r ..\portable_password_manager\requirements.txt -t .\site-packages
-   ```
-5) Copy two created folders to your USB drive. Your password manager is ready to go!
+# for Windows build
+docker build -t ppm_packager_windows --file .\windows_resources\Dockerfile --build-arg PACKAGE_VERSION=latest .
+docker run --mount type=bind,source=.\packages,destination=/dist ppm_packager_windows
+
+# for Linux build
+docker build -t ppm_packager_linux --file .\linux_resources\Dockerfile --build-arg PACKAGE_VERSION=latest .
+docker run --mount type=bind,source=.\packages,destination=/dist ppm_packager_linux
+```
+4) Unzip the build to your flash drive. Your password manager is ready to go!
 
 ## Firefox
 
@@ -41,17 +38,26 @@ that were made. I'm working on that inconvenience.
 
 ## Usage
 
+On Windows (not that convenient yet):
+
 ```shell
-python main.py
+cd portable_password_manager
+..\python-embed\python main.py
+```
+
+On Linux:
+
+```shell
+cd portable_password_manager
+./main.py
 ```
 
 ... and follow the text interface instructions!
 
 ## TODO
 
-* Create and test release with a packaged Python environment
 * Include a function that updates Firefox password storage in the runtime
+* Implement support for Mozilla Firefox internal storage master password
 * Add flash drive specification for the USB ejection task 
 * Check `installs.ini` and `profiles.ini` in Mozilla folder
 * Implement Google Chrome support
-* Implement Linux support

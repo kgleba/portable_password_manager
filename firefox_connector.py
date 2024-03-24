@@ -14,8 +14,19 @@ from Crypto.Util.Padding import pad
 from pyasn1.codec.der.decoder import Decoder, decode as der_decode
 from pyasn1.codec.der.encoder import encode as der_encode
 from pyasn1.type.univ import ObjectIdentifier, OctetString, Sequence
+from dotenv import load_dotenv
 
-PROFILE_DIR = Path(os.getenv('APPDATA')) / 'Mozilla/Firefox/Profiles'
+match sys.platform:
+    case 'win32':
+        PROFILE_DIR = Path(os.getenv('APPDATA')) / 'Mozilla/Firefox/Profiles'
+    case 'linux':
+        load_dotenv(Path(__file__).resolve().parent / '.env', override=True)
+        PROFILE_DIR = Path(os.getenv('HOME', '')) / '.mozilla/firefox'
+    case 'darwin':
+        raise NotImplementedError('Module is not supported on Mac OS X yet')
+    case _:
+        raise EnvironmentError('Operating system is not recognized')
+
 WORKDIR = None
 
 for file in PROFILE_DIR.glob('**/*'):

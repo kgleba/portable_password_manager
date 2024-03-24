@@ -12,14 +12,21 @@ MASTER_PASSWORD = ''
 KEY = b''
 
 
-def init_crypto(master_password: str):
+def init_crypto(master_password: str | None) -> bool:
     global MASTER_PASSWORD, KEY
 
+    if master_password is None:
+        return False
+
+    backup_key = KEY
     MASTER_PASSWORD = master_password
     KEY = PBKDF2(MASTER_PASSWORD, SALT, 32, count=1_000_000, hmac_hash_module=SHA512)
 
     if decrypt_logins() is None:
-        sys.exit()
+        KEY = backup_key
+        return False
+
+    return True
 
 
 def load_logins() -> dict:
