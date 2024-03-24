@@ -1,4 +1,8 @@
 validators~=0.22.0
-pycryptodome~=3.20.0
 pyasn1~=0.5.1
+python-dotenv~=1.0.1
 PyInquirer @ git+https://github.com/CITGuru/PyInquirer
+
+# pycryptodome~=3.20.0
+# as OS-specific dependency, should be installed separately from the main requirements
+# will be fixed later, with migration to poetry
