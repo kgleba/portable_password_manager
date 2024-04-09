@@ -11,10 +11,10 @@ from uuid import uuid4
 
 from Crypto.Cipher import AES, DES3
 from Crypto.Util.Padding import pad
+from dotenv import load_dotenv
 from pyasn1.codec.der.decoder import Decoder, decode as der_decode
 from pyasn1.codec.der.encoder import encode as der_encode
 from pyasn1.type.univ import ObjectIdentifier, OctetString, Sequence
-from dotenv import load_dotenv
 
 match sys.platform:
     case 'win32':
@@ -141,8 +141,11 @@ def encode_data(key: bytes, data: str):
 
 
 def load_logins() -> dict:
-    with open(WORKDIR / 'logins.json', 'r', encoding='utf-8') as logins_file:
-        data = json.load(logins_file)
+    try:
+        with open(WORKDIR / 'logins.json', 'r', encoding='utf-8') as logins_file:
+            data = json.load(logins_file)
+    except json.decoder.JSONDecodeError:
+        data = {'nextId': 1, 'logins': []}
 
     return data
 

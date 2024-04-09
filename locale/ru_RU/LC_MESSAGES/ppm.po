@@ -1,0 +1,88 @@
+# PORTABLE PASSWORD MANAGER
+# Copyright (C) 2024
+# This file is distributed under the same license as the PPM package.
+# kgleba <EMAIL@ADDRESS>, 2024.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 19:15+0300\n"
+"PO-Revision-Date: 2024-04-08 19:15+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Enter valid URL"
+msgstr "Введите валидный URL"
+
+msgid "Field could not be empty"
+msgstr "Поле не может быть пустым"
+
+msgid "Enter Master Password for the encrypted data:"
+msgstr "Введите мастер-пароль для зашифрованных данных:"
+
+msgid "Do you want to reset DB password?"
+msgstr "Хотите ли вы сбросить пароль БД?"
+
+msgid "Select action you want to perform:"
+msgstr "Выберите действие, которое хотите совершить:"
+
+msgid "Enter URL of the entry:"
+msgstr "Введите URL записи:"
+
+msgid "Enter login of the entry:"
+msgstr "Введите логин записи:"
+
+msgid "Enter password of the entry:"
+msgstr "Введите пароль записи:"
+
+msgid ""
+"Enter login of the entry (leave blank if you don't want to include it in "
+"query):"
+msgstr "Введите логин записи (оставьте пустым, если не хотите включать его в запрос):"
+
+msgid ""
+"Enter password of the entry (leave blank if you don't want to include it in "
+"query):"
+msgstr "Введите пароль записи (оставьте пустым, если не хотите включать его в запрос):"
+
+msgid "Do you want to insert all stored entries?"
+msgstr "Хотите ли вы вставить все хранимые записи?"
+
+msgid "Choose the preferred locale (language):"
+msgstr "Выберите желаемую локаль (язык):"
+
+msgid ""
+"Master Password for the DB is not set (proceed only in safe environment!)"
+msgstr "Мастер-пароль для БД не задан (продолжайте только в доверенном окружении!)"
+
+msgid "No entries found"
+msgstr "Записей не найдено"
+
+msgid "More than one entry found"
+msgstr "Более чем одна запись найдена"
+
+msgid "Insert entry to browser"
+msgstr "Вставить запись в браузер"
+
+msgid "Add entry to DB"
+msgstr "Добавить запись в БД"
+
+msgid "Remove entry from DB"
+msgstr "Удалить запись из БД"
+
+msgid "Show DB entries (without passwords)"
+msgstr "Показать записи БД (со скрытыми паролями)"
+
+msgid "Show full DB entries (requires authorization)"
+msgstr "Показать полные записи БД (потребуется авторизация)"
+
+msgid "Change application language"
+msgstr "Изменить язык приложения"
+
+msgid "Exit"
+msgstr "Выйти"

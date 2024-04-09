@@ -1,10 +1,11 @@
 # Portable Password Manager
 
-The project is in development right now :)
+[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/kgleba/portable_password_manager/blob/main/README.md)
+[![ru](https://img.shields.io/badge/lang-ru-green.svg)](https://github.com/kgleba/portable_password_manager/blob/main/README.ru.md)
 
 ## Installation
 
-Download the latest release with the desired OS, unzip it, and copy the files to your flash drive. Your password manager is ready to go!
+Download the [latest release](https://github.com/kgleba/portable_password_manager/releases/latest) with the desired OS, unzip it, and copy the files to your flash drive. Your password manager is ready to go!
 
 Or, if you want to create a development build:
 
@@ -29,7 +30,7 @@ docker run --mount type=bind,source=.\packages,destination=/dist ppm_packager_li
 <u>NB</u> Make sure that you have at least once inserted a password into your browser manually. Otherwise, soft won't be
 able to retrieve and store your passwords.
 
-If you want to reset the password for the DB, simply delete `logins.json` from a project directory and run `main.py`
+If you want to reset the password for the DB, enter incorrect passwords 3 times or simply delete `logins.json` from a project directory
 
 Note that resetting the password for the DB will wipe out all stored entries!
 

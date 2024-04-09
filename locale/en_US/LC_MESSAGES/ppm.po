@@ -1,0 +1,88 @@
+# PORTABLE PASSWORD MANAGER
+# Copyright (C) 2024
+# This file is distributed under the same license as the PPM package.
+# kgleba <EMAIL@ADDRESS>, 2024.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-08 19:15+0300\n"
+"PO-Revision-Date: 2024-04-08 19:15+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Enter valid URL"
+msgstr ""
+
+msgid "Field could not be empty"
+msgstr ""
+
+msgid "Enter Master Password for the encrypted data:"
+msgstr ""
+
+msgid "Do you want to reset DB password?"
+msgstr ""
+
+msgid "Select action you want to perform:"
+msgstr ""
+
+msgid "Enter URL of the entry:"
+msgstr ""
+
+msgid "Enter login of the entry:"
+msgstr ""
+
+msgid "Enter password of the entry:"
+msgstr ""
+
+msgid ""
+"Enter login of the entry (leave blank if you don't want to include it in "
+"query):"
+msgstr ""
+
+msgid ""
+"Enter password of the entry (leave blank if you don't want to include it in "
+"query):"
+msgstr ""
+
+msgid "Do you want to insert all stored entries?"
+msgstr ""
+
+msgid "Choose the preferred locale (language):"
+msgstr ""
+
+msgid ""
+"Master Password for the DB is not set (proceed only in safe environment!)"
+msgstr ""
+
+msgid "No entries found"
+msgstr ""
+
+msgid "More than one entry found"
+msgstr ""
+
+msgid "Insert entry to browser"
+msgstr ""
+
+msgid "Add entry to DB"
+msgstr ""
+
+msgid "Remove entry from DB"
+msgstr ""
+
+msgid "Show DB entries (without passwords)"
+msgstr ""
+
+msgid "Show full DB entries (requires authorization)"
+msgstr ""
+
+msgid "Change application language"
+msgstr ""
+
+msgid "Exit"
+msgstr ""

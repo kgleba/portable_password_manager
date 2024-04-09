@@ -4,7 +4,7 @@ ARG PYTHON_VERSION=3.11.8
 ARG PACKAGE_VERSION=latest
 ENV PACKAGE_VERSION=${PACKAGE_VERSION}
 
-RUN apt update && apt install -y wget git zip
+RUN apt update && apt install -y wget git zip gettext
 
 WORKDIR /build
 
@@ -19,6 +19,9 @@ WORKDIR portable_password_manager
 RUN printf '#!/bin/sh\n"exec" "$(dirname $0)/../python-embed/bin/python" "$0" "$@"\n\n' | cat - main.py > tempfile && mv tempfile main.py
 RUN printf '#!/bin/sh\n"exec" "$(dirname $0)/../python-embed/bin/python" "$0" "$@"\n\n' | cat - remove_passwords.py > tempfile && mv tempfile remove_passwords.py
 RUN chmod +x main.py && chmod +x remove_passwords.py
+
+RUN cd locale/en_US/LC_MESSAGES && msgfmt -o ppm.mo ppm.po
+RUN cd locale/ru_RU/LC_MESSAGES && msgfmt -o ppm.mo ppm.po
 
 WORKDIR /build
 ENTRYPOINT zip -r -q /dist/ppm_package_linux_${PACKAGE_VERSION}.zip .

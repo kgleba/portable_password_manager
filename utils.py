@@ -69,7 +69,7 @@ def init_local_linux():
     subprocess.Popen(['cp', '-r', PYTHON_DIR, TEMP_DIR.parent])
     subprocess.Popen(f'env | grep HOME > {TEMP_DIR / ".env"}', shell=True)
 
-    rule_init_command = fr'echo SUBSYSTEM==\"usb\", ACTION==\"remove\", ENV{{DEVTYPE}}==\"usb_device\", RUN=\"./{TEMP_DIR / "remove_passwords.py"}\" > /etc/udev/rules.d/42-ppm-usb.rules'
+    rule_init_command = fr'echo SUBSYSTEM==\"usb\", ACTION==\"remove\", ENV{{DEVTYPE}}==\"usb_device\", RUN=\"{TEMP_DIR / "remove_passwords.py"}\" > /etc/udev/rules.d/42-ppm-usb.rules'
     reload_rules_command = 'udevadm control --reload-rules'
     trigger_rule_command = 'udevadm trigger'
     reload_service_command = 'udevadm control --reload  '
