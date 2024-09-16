@@ -1,5 +1,5 @@
 validators~=0.30.0
-pyasn1~=0.6.0
+pyasn1~=0.6.1
 python-dotenv~=1.0.1
 PyInquirer @ git+https://github.com/CITGuru/PyInquirer
 
